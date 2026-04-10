@@ -1,557 +1,168 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>That's Not a Hat – Cara Bermain</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial: That's Not a Hat | ZonaKepo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        :root {
+            --bg-color: #f4f4f4;
+            --card-color: #ffffff;
+            --accent-color: #e74c3c;
+            --text-color: #2c3e50;
+        }
 
-  :root {
-    --cream: #FFF8EE;
-    --warm: #FFF0D6;
-    --ink: #1A1008;
-    --red: #E8321A;
-    --gold: #F5A623;
-    --teal: #00897B;
-    --blue: #1460E8;
-    --purple: #6B21E8;
-    --green: #2E7D32;
-    --card-r: 20px;
-  }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
 
-  html, body {
-    width: 100%; height: 100%;
-    overflow: hidden;
-    background: var(--cream);
-    font-family: 'Nunito', sans-serif;
-    color: var(--ink);
-    touch-action: pan-y;
-  }
+        .swiper {
+            width: 100%;
+            height: 100vh;
+        }
 
-  /* ── PROGRESS BAR ── */
-  #progress-bar {
-    position: fixed; top: 0; left: 0;
-    height: 5px; background: var(--red);
-    transition: width .4s cubic-bezier(.4,0,.2,1);
-    z-index: 100;
-  }
+        .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
+        }
 
-  /* ── SLIDE WRAPPER ── */
-  #slider {
-    display: flex;
-    width: 100vw; height: 100vh;
-    transition: transform .45s cubic-bezier(.4,0,.2,1);
-  }
+        /* Styling Kartu */
+        .content-card {
+            background: var(--card-color);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            border-bottom: 8px solid var(--accent-color);
+        }
 
-  .slide {
-    min-width: 100vw;
-    height: 100vh;
-    overflow-y: auto;
-    scroll-snap-align: start;
-    padding: 56px 24px 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
+        h1 { color: var(--accent-color); margin-bottom: 10px; }
+        p { line-height: 1.6; font-size: 1.1em; }
+        
+        .step-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px;
+            font-weight: bold;
+        }
 
-  /* ── SLIDE THEMES ── */
-  .slide-0 { background: linear-gradient(160deg, #1A0A28 0%, #2C1654 60%, #0D3B6E 100%); color: #fff; }
-  .slide-1 { background: var(--cream); }
-  .slide-2 { background: #FFF9F0; }
-  .slide-3 { background: #F0FFF4; }
-  .slide-4 { background: #FFF0F0; }
-  .slide-5 { background: #F0F4FF; }
-  .slide-6 { background: #FFFBF0; }
-  .slide-7 { background: #F5F0FF; }
-  .slide-8 { background: #F0FFFE; }
-  .slide-9 { background: #FFF5F0; }
-  .slide-10 { background: linear-gradient(160deg, #0D3B1A 0%, #1A5C2A 100%); color: #fff; }
+        .footer-hint {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.8em;
+            opacity: 0.6;
+            width: 100%;
+        }
 
-  /* ── COVER ── */
-  .cover-emoji {
-    font-size: 88px;
-    animation: float 3s ease-in-out infinite;
-    margin-bottom: 16px;
-    margin-top: 24px;
-  }
-  @keyframes float {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-14px); }
-  }
-  .cover-title {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(38px, 10vw, 64px);
-    line-height: 1;
-    text-align: center;
-    color: #fff;
-    text-shadow: 0 4px 24px rgba(0,0,0,.4);
-  }
-  .cover-title span { color: var(--gold); }
-  .cover-sub {
-    margin-top: 12px;
-    font-size: 15px;
-    opacity: .7;
-    text-align: center;
-    letter-spacing: .04em;
-  }
-  .badge-row {
-    display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; justify-content: center;
-  }
-  .badge {
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.2);
-    backdrop-filter: blur(8px);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #fff;
-  }
-  .cover-hint {
-    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%);
-    font-size: 13px; opacity: .55; color: #fff;
-    animation: pulse 2s ease-in-out infinite;
-    white-space: nowrap;
-  }
-  @keyframes pulse { 0%,100%{opacity:.55} 50%{opacity:1} }
-
-  /* ── SLIDE HEADER ── */
-  .slide-num {
-    position: absolute; top: 18px; right: 22px;
-    font-size: 11px; font-weight: 800; letter-spacing: .08em;
-    opacity: .35; text-transform: uppercase;
-  }
-  .step-label {
-    font-size: 11px; font-weight: 800; letter-spacing: .12em;
-    text-transform: uppercase; opacity: .45; margin-bottom: 6px;
-  }
-  .slide-icon {
-    font-size: 54px; margin-bottom: 12px;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,.12));
-  }
-  .slide-title {
-    font-family: 'Boogaloo', cursive;
-    font-size: clamp(26px, 7vw, 40px);
-    text-align: center;
-    line-height: 1.15;
-    margin-bottom: 16px;
-  }
-
-  /* ── CARDS ── */
-  .card {
-    background: #fff;
-    border-radius: var(--card-r);
-    padding: 18px 20px;
-    margin-bottom: 14px;
-    width: 100%;
-    max-width: 480px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.07);
-    border-left: 5px solid var(--gold);
-    position: relative;
-  }
-  .card.blue { border-left-color: var(--blue); }
-  .card.red { border-left-color: var(--red); }
-  .card.teal { border-left-color: var(--teal); }
-  .card.purple { border-left-color: var(--purple); }
-  .card.green { border-left-color: var(--green); }
-  .card-title {
-    font-weight: 800; font-size: 14px; margin-bottom: 4px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .card-body { font-size: 14px; line-height: 1.6; opacity: .8; }
-
-  /* ── ILLUSTRATION BOX ── */
-  .illus-box {
-    background: #fff;
-    border-radius: 20px;
-    padding: 28px;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 6px 32px rgba(0,0,0,.08);
-    text-align: center;
-    margin-bottom: 16px;
-  }
-  .table-viz {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin: 16px auto;
-    max-width: 320px;
-  }
-  .player-token {
-    background: var(--warm);
-    border-radius: 14px;
-    padding: 10px 6px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: 700;
-    border: 2px solid rgba(0,0,0,.06);
-  }
-  .player-token .ava { font-size: 28px; }
-  .gift-card-vis {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 52px; height: 68px;
-    border-radius: 10px;
-    font-size: 22px;
-    font-weight: 900;
-    border: 2px solid;
-    margin: 2px;
-  }
-  .face-up { background: #FFF8EE; border-color: #F5A623; }
-  .face-down { background: #3A2060; border-color: #6B21E8; color: #fff; font-size: 18px; }
-  .arrow-chip {
-    display: inline-block;
-    background: var(--ink);
-    color: #fff;
-    border-radius: 100px;
-    padding: 4px 14px;
-    font-size: 13px;
-    font-weight: 800;
-    margin: 4px;
-  }
-
-  /* ── DIALOG BOX ── */
-  .dialog-box {
-    background: #fff;
-    border-radius: 18px;
-    padding: 20px;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 6px 30px rgba(0,0,0,.1);
-    margin-bottom: 14px;
-  }
-  .speech {
-    background: var(--warm);
-    border-radius: 14px 14px 14px 4px;
-    padding: 12px 16px;
-    font-size: 14px;
-    font-style: italic;
-    font-weight: 700;
-    margin-bottom: 8px;
-    border-left: 4px solid var(--gold);
-  }
-  .speech.refuse {
-    background: #FFF0F0;
-    border-left-color: var(--red);
-  }
-
-  /* ── PENALTY TRACK ── */
-  .penalty-row {
-    display: flex; gap: 8px; justify-content: center; margin: 8px 0;
-  }
-  .skull {
-    font-size: 28px;
-    filter: grayscale(1) opacity(.25);
-  }
-  .skull.filled { filter: none; }
-
-  /* ── TIPS LIST ── */
-  .tips-list { list-style: none; max-width: 440px; width: 100%; }
-  .tips-list li {
-    display: flex; align-items: flex-start; gap: 12px;
-    background: #fff;
-    border-radius: 14px;
-    padding: 14px 16px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 12px rgba(0,0,0,.06);
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  .tips-list li .tip-icon { font-size: 22px; flex-shrink: 0; }
-
-  /* ── NAV DOTS ── */
-  #nav-dots {
-    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 7px; z-index: 99;
-  }
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.18);
-    transition: all .3s;
-    cursor: pointer;
-  }
-  .dot.active { width: 22px; border-radius: 4px; background: var(--red); }
-
-  /* ── NAV ARROWS ── */
-  .nav-btn {
-    position: fixed; bottom: 10px;
-    background: rgba(255,255,255,.9);
-    border: none; border-radius: 50%;
-    width: 40px; height: 40px;
-    font-size: 18px; cursor: pointer;
-    box-shadow: 0 2px 12px rgba(0,0,0,.15);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 99; transition: opacity .3s;
-  }
-  #btn-prev { left: 12px; }
-  #btn-next { right: 12px; }
-  .nav-btn:disabled { opacity: .2; cursor: default; }
-
-  /* ── QR SLIDE ── */
-  .qr-wrap {
-    background: #fff;
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 8px 40px rgba(0,0,0,.12);
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-    max-width: 320px; width: 100%;
-  }
-  #qrcode canvas, #qrcode img { border-radius: 8px; }
-  .qr-url {
-    font-size: 12px; word-break: break-all; opacity: .5; text-align: center;
-  }
-  .winner-banner {
-    font-family: 'Boogaloo', cursive;
-    font-size: 36px; color: var(--gold);
-    text-align: center; text-shadow: 0 2px 12px rgba(0,0,0,.3);
-    margin-bottom: 8px;
-  }
-  .confetti { font-size: 32px; animation: spin 4s linear infinite; display: inline-block; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* scrollbar minimal */
-  .slide::-webkit-scrollbar { width: 3px; }
-  .slide::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 2px; }
-
-  @media (min-width: 600px) {
-    .slide { padding: 60px 40px 100px; }
-  }
-</style>
+        /* Warna khusus halaman cover */
+        .slide-cover { background: var(--accent-color); color: white; }
+        .slide-cover .content-card { border-bottom: none; color: var(--text-color); }
+    </style>
 </head>
 <body>
 
-<div id="progress-bar"></div>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide slide-cover">
+                <div class="content-card">
+                    <h1>🎩</h1>
+                    <h2>That's Not a Hat</h2>
+                    <p>Tutorial Singkat Cara Bermain</p>
+                    <small>Geser ke kiri untuk mulai →</small>
+                </div>
+            </div>
 
-<div id="slider">
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <div class="step-number">1</div>
+                    <h3>Persiapan</h3>
+                    <p>Bagi 1 kartu tertutup ke tiap pemain. Sisa kartu jadi tumpukan tengah. Buka 1 kartu teratas di depan pengocok.</p>
+                </div>
+            </div>
 
-  <!-- SLIDE 0: COVER -->
-  <div class="slide slide-0">
-    <div class="cover-emoji">🎁</div>
-    <div class="cover-title">That's Not<br><span>a Hat!</span></div>
-    <div class="cover-sub">Panduan Cara Bermain · Bahasa Indonesia</div>
-    <div class="badge-row">
-      <span class="badge">👥 3–8 Pemain</span>
-      <span class="badge">⏱ 15–30 Menit</span>
-      <span class="badge">🎂 8+ Tahun</span>
-      <span class="badge">🧠 Ingatan & Bluffing</span>
-    </div>
-    <div class="cover-hint">← geser untuk mulai →</div>
-  </div>
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <div class="step-number">2</div>
+                    <h3>Mulai Memberi</h3>
+                    <p>Ambil kartu baru dari tumpukan, lalu berikan kartu lama kamu ke teman sesuai arah panah di balik kartu.</p>
+                </div>
+            </div>
 
-  <!-- SLIDE 1: OVERVIEW -->
-  <div class="slide slide-1">
-    <span class="slide-num">1/10</span>
-    <div class="step-label">Pengenalan</div>
-    <div class="slide-icon">🧠</div>
-    <div class="slide-title">Apa Itu<br>That's Not a Hat?</div>
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <div class="step-number">3</div>
+                    <h3>Tutup & Sebut</h3>
+                    <p>Kartu harus diberikan dalam kondisi <b>tertutup</b>. Kamu wajib menyebutkan isinya: <i>"Ini kado topi untukmu!"</i></p>
+                </div>
+            </div>
 
-    <div class="card teal" style="max-width:480px">
-      <div class="card-title">🎮 Konsep Dasar</div>
-      <div class="card-body">
-        Permainan kartu memori dan <b>bluffing</b> di mana pemain saling bertukar "hadiah" sambil berusaha mengingat isi kartu yang sudah dibalik.
-        Karena kartu diputar meja terus-menerus, siapa pun bisa lupa — dan di situlah asyiknya!
-      </div>
-    </div>
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <div class="step-number">4</div>
+                    <h3>Lupa? Bluffing!</h3>
+                    <p>Jika kamu lupa isinya, jangan panik! Tetaplah yakin saat menyebutkan nama barang agar tidak dicurigai.</p>
+                </div>
+            </div>
 
-    <div class="card blue" style="max-width:480px">
-      <div class="card-title">🏆 Tujuan</div>
-      <div class="card-body">
-        Kumpulkan <b>poin penalti sesedikit mungkin</b>. Permainan berakhir saat seseorang mencapai 3 penalti. Pemain dengan poin terkecil menang!
-      </div>
-    </div>
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <div class="step-number">5</div>
+                    <h3>Tantangan</h3>
+                    <p>Penerima bisa menerima atau menantang: <i>"Itu bukan topi!"</i>. Jika ragu, kartu akan dibuka untuk pembuktian.</p>
+                </div>
+            </div>
 
-    <div class="card" style="max-width:480px">
-      <div class="card-title">📦 Isi Kotak</div>
-      <div class="card-body">
-        110 kartu bergambar benda-benda lucu: topi, ember, kerucut lalu lintas, pizza, sepatu, dan banyak lagi.
-      </div>
-    </div>
-  </div>
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <div class="step-number">6</div>
+                    <h3>Poin Minus</h3>
+                    <p>Siapa yang salah tebak atau ketahuan bohong mendapatkan kartu itu sebagai <b>poin minus</b>.</p>
+                </div>
+            </div>
 
-  <!-- SLIDE 2: SETUP -->
-  <div class="slide slide-2">
-    <span class="slide-num">2/10</span>
-    <div class="step-label">Langkah 1</div>
-    <div class="slide-icon">🃏</div>
-    <div class="slide-title">Persiapan Permainan</div>
+            <div class="swiper-slide">
+                <div class="content-card">
+                    <h3>Selesai!</h3>
+                    <p>Permainan berakhir jika ada yang mendapat 3 kartu minus. Pemain dengan minus paling sedikit menang!</p>
+                    <button onclick="location.reload()" style="padding:10px 20px; cursor:pointer;">Ulangi Tutorial</button>
+                </div>
+            </div>
 
-    <div class="illus-box">
-      <div style="font-size:13px;font-weight:800;margin-bottom:12px;opacity:.5">TATA MEJA</div>
-      <div class="table-viz">
-        <div class="player-token"><div class="ava">👤</div>Ana<br><div class="gift-card-vis face-up">🎩</div></div>
-        <div class="player-token"><div class="ava">🎁</div><span style="font-size:10px">Gift Shop<br>(tumpukan)</span></div>
-        <div class="player-token"><div class="ava">👤</div>Budi<br><div class="gift-card-vis face-up">🚗</div></div>
-      </div>
-      <div style="font-size:12px;opacity:.5">Kartu awal diletakkan face-up di depan masing-masing pemain</div>
-    </div>
-
-    <div class="card green" style="max-width:480px">
-      <div class="card-title">① Kocok kartu</div>
-      <div class="card-body">Kocok semua 110 kartu secara merata.</div>
-    </div>
-    <div class="card green" style="max-width:480px">
-      <div class="card-title">② Bagikan 1 kartu per pemain</div>
-      <div class="card-body">Setiap pemain meletakkan kartu <b>face-up</b> (tampak gambar) di depannya. Ingat-ingat gambar milik semua orang!</div>
-    </div>
-    <div class="card green" style="max-width:480px">
-      <div class="card-title">③ Buat tumpukan Gift Shop</div>
-      <div class="card-body">Sisa kartu ditaruh di tengah meja dalam keadaan <b>face-up</b> sebagai "toko hadiah".</div>
-    </div>
-    <div class="card green" style="max-width:480px">
-      <div class="card-title">④ Tentukan siapa yang mulai</div>
-      <div class="card-body">Pemain yang <b>terakhir menerima hadiah</b> di dunia nyata mulai duluan. Kalau tidak ada yang tahu, suit saja!</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 3: GILIRAN -->
-  <div class="slide slide-3">
-    <span class="slide-num">3/10</span>
-    <div class="step-label">Langkah 2</div>
-    <div class="slide-icon">🔄</div>
-    <div class="slide-title">Cara Bermain<br>Tiap Giliran</div>
-
-    <div class="card blue" style="max-width:480px">
-      <div class="card-title">① Ambil kartu dari Gift Shop</div>
-      <div class="card-body">Pemain yang giliran ambil kartu paling atas dari Gift Shop. <b>Tunjukkan ke semua orang.</b></div>
-    </div>
-    <div class="card blue" style="max-width:480px">
-      <div class="card-title">② Balik & ingat</div>
-      <div class="card-body">Taruh kartu baru di depanmu <b>face-down</b> (tertutup). Setelah tertutup, <b>tidak boleh dilihat lagi.</b></div>
-    </div>
-    <div class="card blue" style="max-width:480px">
-      <div class="card-title">③ Cek anak panah</div>
-      <div class="card-body">Di balik kartu ada <b>anak panah</b> (↑ atau ↓ atau ← atau →). Anak panah menunjuk ke arah mana kamu harus memberikan hadiah lamamu.</div>
-    </div>
-    <div class="card blue" style="max-width:480px">
-      <div class="card-title">④ Berikan hadiah lama</div>
-      <div class="card-body">Geser kartu lamamu ke arah yang ditunjuk anak panah kartu <b>baru</b>, sambil bilang:<br><br>
-        <i style="background:#e8f4fd;padding:4px 10px;border-radius:8px;">"Aku punya <b>[nama benda]</b> untukmu!"</i>
-      </div>
-    </div>
-
-    <div class="illus-box">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px">Ilustrasi anak panah</div>
-      <div class="gift-card-vis face-down" style="width:68px;height:88px;font-size:32px;">←</div>
-      <div style="font-size:12px;opacity:.6;margin-top:8px">Anak panah ← berarti berikan hadiah ke pemain di kirimu</div>
-    </div>
-  </div>
-
-  <!-- SLIDE 4: MENERIMA -->
-  <div class="slide slide-4">
-    <span class="slide-num">4/10</span>
-    <div class="step-label">Langkah 3a</div>
-    <div class="slide-icon">🤝</div>
-    <div class="slide-title">Menerima Hadiah</div>
-
-    <div class="dialog-box">
-      <div style="font-size:13px;font-weight:800;opacity:.45;margin-bottom:10px">SKENARIO: Ana memberikan hadiah ke Budi</div>
-      <div class="speech">"Aku punya topi yang bagus untukmu, Budi!"</div>
-      <div style="font-size:13px;opacity:.6;margin:8px 0">Budi yakin itu memang topi (dia ingat waktu kartunya ditunjukkan tadi)…</div>
-      <div class="speech">"Terima kasih! 😊"</div>
-    </div>
-
-    <div class="card" style="max-width:480px">
-      <div class="card-title">✅ Kapan menerima?</div>
-      <div class="card-body">
-        Terima hadiah jika kamu <b>percaya</b> pemberi mengatakan yang benar. Cukup bilang <b>"Terima kasih"</b> dan letakkan kartu di depanmu (face-down, di atas kartu lamamu).
-      </div>
-    </div>
-
-    <div class="card teal" style="max-width:480px">
-      <div class="card-title">📌 Aturan tumpukan kartu</div>
-      <div class="card-body">
-        Kartu <b>baru</b> selalu ditaruh di <b>atas</b>. Kartu yang paling bawah adalah yang paling lama kamu punya — dan itu yang akan kamu berikan selanjutnya.
-      </div>
-    </div>
-
-    <div class="illus-box">
-      <div style="font-size:13px;font-weight:700;margin-bottom:10px">Tumpukan kartu Budi</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
-        <div style="font-size:11px;opacity:.5">← baru datang</div>
-        <div class="gift-card-vis face-down" style="width:60px;height:78px;font-size:24px;">?</div>
-        <div class="gift-card-vis face-down" style="width:60px;height:78px;font-size:24px;opacity:.6">?</div>
-        <div style="font-size:11px;opacity:.5">ini yang akan dioper selanjutnya ↓</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 5: MENOLAK -->
-  <div class="slide slide-5">
-    <span class="slide-num">5/10</span>
-    <div class="step-label">Langkah 3b</div>
-    <div class="slide-icon">🚫</div>
-    <div class="slide-title">Menolak Hadiah</div>
-
-    <div class="dialog-box">
-      <div style="font-size:13px;font-weight:800;opacity:.45;margin-bottom:10px">SKENARIO: Marlena memberikan hadiah ke Ana</div>
-      <div class="speech">"Aku punya topi untukmu, Ana!"</div>
-      <div style="font-size:13px;opacity:.6;margin:8px 0">Ana curiga, karena dia ingat itu bukan topi…</div>
-      <div class="speech refuse">"That's not a hat! 😤"</div>
-      <div style="font-size:13px;opacity:.6;margin:8px 0">Kartu dibalik — ternyata itu brokoli 🥦. Marlena yang salah!</div>
-    </div>
-
-    <div class="card red" style="max-width:480px">
-      <div class="card-title">❌ Kapan menolak?</div>
-      <div class="card-body">Kalau kamu <b>yakin</b> pemberi berbohong atau salah mengingat, ucapkan:<br><br>
-        <i style="background:#fff0f0;padding:4px 10px;border-radius:8px;font-weight:700">"That's not a [nama benda]!"</i>
-      </div>
-    </div>
-
-    <div class="card" style="max-width:480px">
-      <div class="card-title">⚖️ Siapa yang dapat penalti?</div>
-      <div class="card-body">
-        <b>Pemberi salah</b> → pemberi dapat penalti 💀<br>
-        <b>Penerima salah</b> (tidak perlu ditolak tapi ditolak) → penerima dapat penalti 💀<br><br>
-        Siapa yang mendapat penalti harus <b>mengambil kartu baru dari Gift Shop</b> dan langsung meneruskan permainan.
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 6: PENALTI -->
-  <div class="slide slide-6">
-    <span class="slide-num">6/10</span>
-    <div class="step-label">Poin Penalti</div>
-    <div class="slide-icon">💀</div>
-    <div class="slide-title">Sistem Penalti</div>
-
-    <div class="illus-box">
-      <div style="font-size:14px;font-weight:800;margin-bottom:16px">Penalti pemain Ana</div>
-      <div>
-        <div style="font-size:12px;opacity:.5;margin-bottom:8px">Penalti 1:</div>
-        <div class="penalty-row">
-          <span class="skull filled">💀</span><span class="skull">💀</span><span class="skull">💀</span>
         </div>
-        <div style="font-size:12px;opacity:.5;margin:12px 0 8px">Penalti 2:</div>
-        <div class="penalty-row">
-          <span class="skull filled">💀</span><span class="skull filled">💀</span><span class="skull">💀</span>
-        </div>
-        <div style="font-size:12px;opacity:.5;margin:12px 0 8px">Penalti 3 = GAME OVER:</div>
-        <div class="penalty-row">
-          <span class="skull filled">💀</span><span class="skull filled">💀</span><span class="skull filled">💀</span>
-        </div>
-      </div>
+        <div class="swiper-pagination"></div>
     </div>
 
-    <div class="card red" style="max-width:480px">
-      <div class="card-title">💀 Penalti ke-3 = Permainan Berakhir</div>
-      <div class="card-body">Saat seseorang mendapat penalti ke-3, permainan langsung selesai. <b>Hitung poin semua pemain.</b></div>
-    </div>
+    <div class="footer-hint">Swipe untuk navigasi | ZonaKepo Board Game</div>
 
-    <div class="card green" style="max-width:480px">
-      <div class="card-title">🏆 Pemenang</div>
-      <div class="card-body">Pemain dengan <b>poin penalti paling sedikit</b> menang! Kalau seri, pemenang adalah yang punya kartu paling sedikit.</div>
-    </div>
-
-    <div class="card" style="max-width:480px">
-      <div class="card-title">📋 Variasi: Bermain Multi-Ronde</div>
-      <div class="card-body">Sepakati jumlah ronde sama dengan jumlah pemain. Catat poin tiap ronde. 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            pagination: {
+                el: ".swiper-pagination",
+                dynamicBullets: true,
+            },
+            mousewheel: true,
+            keyboard: true,
+        });
+    </script>
+</body>
+</html>
