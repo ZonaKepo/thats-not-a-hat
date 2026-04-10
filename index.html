@@ -7,19 +7,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <style>
         :root {
-            --bg-color: #f4f4f4;
-            --card-color: #ffffff;
-            --accent-color: #e74c3c;
-            --text-color: #2c3e50;
+            --bg-color: #1a1a1a; /* Abu-abu Gelap */
+            --card-color: #262626; /* Abu-abu Sedikit Terang untuk Kartu */
+            --accent-color: #ff4757; /* Merah Terang */
+            --text-color: #ffffff; /* Putih */
         }
 
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+            overflow: hidden;
         }
 
         .swiper {
@@ -32,49 +33,80 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 20px;
             box-sizing: border-box;
             text-align: center;
         }
 
-        /* Styling Kartu */
+        /* Container Kartu */
         .content-card {
             background: var(--card-color);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 100%;
-            border-bottom: 8px solid var(--accent-color);
+            padding: 40px 25px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid #333;
         }
 
-        h1 { color: var(--accent-color); margin-bottom: 10px; }
-        p { line-height: 1.6; font-size: 1.1em; }
+        /* Ukuran Teks Jauh Lebih Besar */
+        h1 { font-size: 3.5em; margin: 0; }
+        h2 { font-size: 2.8em; color: var(--accent-color); margin-top: 10px; }
+        h3 { font-size: 2.2em; margin-bottom: 20px; color: var(--accent-color); }
+        p { font-size: 1.6em; line-height: 1.4; margin-bottom: 20px; font-weight: 400; }
         
         .step-number {
             background: var(--accent-color);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 auto 20px;
+            margin: 0 auto 25px;
+            font-size: 1.8em;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
         }
 
         .footer-hint {
             position: absolute;
-            bottom: 20px;
-            font-size: 0.8em;
-            opacity: 0.6;
+            bottom: 30px;
+            font-size: 1em;
+            opacity: 0.5;
             width: 100%;
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
         }
 
-        /* Warna khusus halaman cover */
-        .slide-cover { background: var(--accent-color); color: white; }
-        .slide-cover .content-card { border-bottom: none; color: var(--text-color); }
+        /* Tombol Ulang */
+        .btn-restart {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.4em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Slide khusus cover */
+        .slide-cover h2 { color: #fff; }
+
+        /* Custom Bullet Pagination */
+        .swiper-pagination-bullet {
+            background: #555 !important;
+            opacity: 1;
+            width: 12px;
+            height: 12px;
+        }
+        .swiper-pagination-bullet-active {
+            background: var(--accent-color) !important;
+        }
     </style>
 </head>
 <body>
@@ -82,12 +114,12 @@
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
             
-            <div class="swiper-slide slide-cover">
-                <div class="content-card">
+            <div class="swiper-slide">
+                <div class="content-card slide-cover">
                     <h1>🎩</h1>
-                    <h2>That's Not a Hat</h2>
-                    <p>Tutorial Singkat Cara Bermain</p>
-                    <small>Geser ke kiri untuk mulai →</small>
+                    <h2>THAT'S NOT A HAT</h2>
+                    <p style="opacity: 0.7;">Panduan Cepat</p>
+                    <small style="font-size: 1.2em;">← Geser untuk Mulai →</small>
                 </div>
             </div>
 
@@ -95,74 +127,5 @@
                 <div class="content-card">
                     <div class="step-number">1</div>
                     <h3>Persiapan</h3>
-                    <p>Bagi 1 kartu tertutup ke tiap pemain. Sisa kartu jadi tumpukan tengah. Buka 1 kartu teratas di depan pengocok.</p>
+                    <p>Bagi <b>1 kartu tertutup</b> ke tiap pemain. Sisa kartu jadi tumpukan. Buka 1 kartu di depan pengocok.</p>
                 </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="content-card">
-                    <div class="step-number">2</div>
-                    <h3>Mulai Memberi</h3>
-                    <p>Ambil kartu baru dari tumpukan, lalu berikan kartu lama kamu ke teman sesuai arah panah di balik kartu.</p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="content-card">
-                    <div class="step-number">3</div>
-                    <h3>Tutup & Sebut</h3>
-                    <p>Kartu harus diberikan dalam kondisi <b>tertutup</b>. Kamu wajib menyebutkan isinya: <i>"Ini kado topi untukmu!"</i></p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="content-card">
-                    <div class="step-number">4</div>
-                    <h3>Lupa? Bluffing!</h3>
-                    <p>Jika kamu lupa isinya, jangan panik! Tetaplah yakin saat menyebutkan nama barang agar tidak dicurigai.</p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="content-card">
-                    <div class="step-number">5</div>
-                    <h3>Tantangan</h3>
-                    <p>Penerima bisa menerima atau menantang: <i>"Itu bukan topi!"</i>. Jika ragu, kartu akan dibuka untuk pembuktian.</p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="content-card">
-                    <div class="step-number">6</div>
-                    <h3>Poin Minus</h3>
-                    <p>Siapa yang salah tebak atau ketahuan bohong mendapatkan kartu itu sebagai <b>poin minus</b>.</p>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="content-card">
-                    <h3>Selesai!</h3>
-                    <p>Permainan berakhir jika ada yang mendapat 3 kartu minus. Pemain dengan minus paling sedikit menang!</p>
-                    <button onclick="location.reload()" style="padding:10px 20px; cursor:pointer;">Ulangi Tutorial</button>
-                </div>
-            </div>
-
-        </div>
-        <div class="swiper-pagination"></div>
-    </div>
-
-    <div class="footer-hint">Swipe untuk navigasi | ZonaKepo Board Game</div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-            pagination: {
-                el: ".swiper-pagination",
-                dynamicBullets: true,
-            },
-            mousewheel: true,
-            keyboard: true,
-        });
-    </script>
-</body>
-</html>
